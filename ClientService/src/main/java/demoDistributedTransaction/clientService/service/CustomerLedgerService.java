@@ -81,9 +81,10 @@ public class CustomerLedgerService {
 		Comparator<CustomerLedger> compareByTransactionId = (CustomerLedger cl1, CustomerLedger cl2) -> cl1.getTransactionId().compareTo(cl2.getTransactionId());
 		Collections.sort(listOfCustomerLedgers, compareByTransactionId);
 		int ledgerNumber = listOfCustomerLedgers.size();
-		
+		//transaction id & batch id can be generated using other method
 		long transactionId = listOfCustomerLedgers.get(ledgerNumber-1).getTransactionId()+1;
 		long batchId = listOfCustomerLedgers.get(ledgerNumber-1).getBatchId()+1;
+		
 		System.out.println("Transaction id,batch id: "+transactionId+","+batchId);
 		customerLedger.setCustomerId(userRequest.getCustomerId());
 		customerLedger.setTransactionId(transactionId);

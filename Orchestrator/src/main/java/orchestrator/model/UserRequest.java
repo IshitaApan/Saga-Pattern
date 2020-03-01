@@ -5,14 +5,16 @@ public class UserRequest {
 	private String userName;
 	private String transactionType;
 	private Double amount;
+	private Long batchId;
 	private String status;
 	
-	public UserRequest(String userName, Long customerId, String transactionType, Double amount, String status) {
+	public UserRequest(String userName, Long customerId, String transactionType, Double amount, Long batchId, String status) {
 		super();
 		this.userName = userName;
 		this.customerId = customerId;
 		this.transactionType = transactionType;
 		this.amount = amount;
+		this.batchId = batchId;
 		this.status = status;
 	}
 	
@@ -44,6 +46,15 @@ public class UserRequest {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
+	
+	public Long getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
+	}
+
 	public String getStatus() {
 		return status;
 	}

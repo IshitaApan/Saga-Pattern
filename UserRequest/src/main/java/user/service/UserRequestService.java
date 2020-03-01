@@ -21,8 +21,7 @@ public class UserRequestService {
 	
 	public void addToUserRequestList(UserRequest userRequest) {
 		userRequestRepository.save(userRequest);
-		rabbitMQConfig.send(userRequest);
-		
+		rabbitMQConfig.send(userRequest);	
 	}
 
 	public List<UserRequest> getAllFromUserRequestList(){

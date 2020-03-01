@@ -14,15 +14,20 @@ public class UserRequest {
 	private String userName;
 	private String transactionType;
 	private Double amount;
+	private Long batchId;
 	private String status;
 	
-	public UserRequest(String userName, Long customerId, String transactionType, Double amount, String status) {
+	
+	public UserRequest(Long id, Long customerId, String userName, String transactionType, Double amount, Long batchId,
+			String status) {
 		super();
-		this.userName = userName;
+		this.id = id;
 		this.customerId = customerId;
-		this.transactionType = transactionType;
+		this.userName = userName;
+		this.transactionType = transactionType.toUpperCase();
 		this.amount = amount;
-		this.status = status;
+		this.batchId = batchId;
+		this.status = status.toUpperCase();
 	}
 	
 	public UserRequest() {
@@ -45,7 +50,7 @@ public class UserRequest {
 		return transactionType;
 	}
 	public void setTransactionType(String transactionType) {
-		this.transactionType = transactionType;
+		this.transactionType = transactionType.toUpperCase();
 	}
 	public Double getAmount() {
 		return amount;
@@ -57,8 +62,17 @@ public class UserRequest {
 		return status;
 	}
 	public void setStatus(String status) {
-		this.status = status;
+		this.status = status.toUpperCase();
 	}
+
+	public Long getBatchId() {
+		return batchId;
+	}
+
+	public void setBatchId(Long batchId) {
+		this.batchId = batchId;
+	}
+	
 	
 	
 }

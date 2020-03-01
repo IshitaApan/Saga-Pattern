@@ -63,6 +63,11 @@ public class RabbitMQConfig {
 		sendCLedger(userRequest);
 	}
 	
+	@RabbitListener(queues = "${UserRequestQ}")
+	public void receiveMessage(String message) {
+		System.out.println(message);
+		
+	}
 	@Scheduled
 	public void sendCLedger(UserRequest userRequest) {
 		rabbitTemplate.convertAndSend(exchangeClient, routingkeyClient, userRequest);

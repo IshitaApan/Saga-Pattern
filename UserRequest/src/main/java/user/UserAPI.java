@@ -15,6 +15,6 @@ public class UserAPI {
 		System.out.println("User API running");
 		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date dateobj = new Date();
-		System.out.println(df.format(dateobj));
+		System.out.println("Time: "+df.format(dateobj));
 	}
 }

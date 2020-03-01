@@ -23,7 +23,6 @@ public class RabbitMQReceiver {
 	private CustomerMasterRepository customerMasterRepository;
 	@Autowired
 	private CustomerLedgerService customerLedgerService;
-	
 	//kaaj korte hobe ekhane
 			@RabbitListener(queues = "CLedgerRequest")
 			public void receiveCLedgerRequest(UserRequest userRequest) {

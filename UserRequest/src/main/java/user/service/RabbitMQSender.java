@@ -57,6 +57,7 @@ public class RabbitMQSender {
 	@Scheduled
 	public void send(UserRequest userRequest) {
 		rabbitTemplate.convertAndSend(exchangeName, routingkey, userRequest);
+		rabbitTemplate.convertAndSend(exchangeName, routingkey, "a message");
 		System.out.println("Sent msg info " + userRequest.getStatus());
  
 	}
