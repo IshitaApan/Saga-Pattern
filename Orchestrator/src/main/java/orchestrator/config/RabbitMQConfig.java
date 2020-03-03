@@ -63,6 +63,8 @@ public class RabbitMQConfig {
 		sendCLedger(userRequest);
 	}
 	
+	//ekhane parametre e user request add korte hobe. message e validity yes or no thakbe. (String validity, UserRequest userRequest)
+	//validity thakle batch id generate korbe. batch id user request e pathabe, client ledger update korbe.
 	@RabbitListener(queues = "${UserRequestQ}")
 	public void receiveMessage(String message) {
 		System.out.println(message);

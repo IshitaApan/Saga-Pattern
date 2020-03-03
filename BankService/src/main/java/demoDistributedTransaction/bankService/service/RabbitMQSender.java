@@ -25,7 +25,7 @@ public class RabbitMQSender {
 	@Scheduled
 	public void send(String status, CustomerLedger customerLedger) {
 		
-		if(customerLedger.getStatus().equals("pending")) {
+		if(customerLedger.getStatus().equals("PENDING")) {
 			customerLedger.setStatus(status);
 		}
 		

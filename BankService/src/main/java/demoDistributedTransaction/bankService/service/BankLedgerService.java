@@ -54,7 +54,7 @@ public class BankLedgerService {
 		}
 		Double bankMasterAmount = bankMaster.getAmount();
 		
-		if(transactionType.equals("Withdraw")) {
+		if(transactionType.equals("WITHDRAW")) {
 			if(bankMasterAmount < bankLedgerAmount) {
 				System.out.println("Withdrawal not possible");
 				return;
@@ -62,13 +62,13 @@ public class BankLedgerService {
 			bankMaster.setAmount(bankMasterAmount-bankLedgerAmount);
 			
 		}
-		else if(transactionType.equals("Deposit")) {
+		else if(transactionType.equals("DEPOSIT")) {
 			bankMaster.setAmount(bankMasterAmount+bankLedgerAmount);
 		}
 		
 		bankLedgerRepository.save(bankLedger);
 		bankMasterRepository.save(bankMaster);
-		String status = "completed";
+		String status = "COMPLETED";
 		rabbitMQSender.send(status, incomingCustomerLedger);
 	}
 	

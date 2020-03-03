@@ -32,7 +32,7 @@ public class RabbitMQReceiver {
 					customerLedgerService.addToCustomerLedger(userRequest);
 				}
 				else {
-					userRequest.setStatus("aborted");
+					userRequest.setStatus("ABORTED");
 					//return rabbitmq CLedger response userRequest where status is "aborted"
 				}
 			}
@@ -62,7 +62,7 @@ public class RabbitMQReceiver {
 		}
 		Double customerMasterBalance = customerMaster.getBalance();
 		
-		if(customerLedger.getTransactionType().equals("Withdraw")) {
+		if(customerLedger.getTransactionType().equals("WITHDRAW")) {
 			if(customerMasterBalance < customerLedger.getAmount()) {
 				System.out.println("Failure!!!! Withdrawal not possible due to lack of balance");
 				return;
@@ -71,7 +71,7 @@ public class RabbitMQReceiver {
 			customerMaster.setLastTransactionDate(customerLedger.getTransactionDate());
 			
 		}
-		else if(customerLedger.getTransactionType().equals("Deposit")) {
+		else if(customerLedger.getTransactionType().equals("DEPOSIT")) {
 			customerMaster.setBalance(customerMasterBalance+customerLedger.getAmount());
 			customerMaster.setLastTransactionDate(customerLedger.getTransactionDate());
 		}

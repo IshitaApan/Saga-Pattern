@@ -48,7 +48,7 @@ public class CustomerLedgerService {
 			System.out.println("Amount is too high!");
 			return false;
 		}
-		if(transactionType.equals("Deposit")) {
+		if(transactionType.equals("DEPOSIT")) {
 			return true;
 		}
 		
@@ -62,7 +62,7 @@ public class CustomerLedgerService {
 		}
 		Double customerMasterBalance = customerMaster.getBalance();
 		
-		if(transactionType.equals("Withdraw")) {
+		if(transactionType.equals("WITHDRAW")) {
 			if(customerMasterBalance < customerLedgerAmount) {
 				System.out.println("Withdrawal not possible due to lack of balance");
 				return false;
