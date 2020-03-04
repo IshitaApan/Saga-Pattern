@@ -24,4 +24,9 @@ Saga transaction can be implemented in different ways, but the two most popular 
    In the orchestration approach, we define a new service with the sole responsibility of telling each participant what to do and when. The saga orchestrator communicates with each service in a command/reply style telling them what operation should be performed.
    [Undersatnd Saga Orchestration in detail from here](https://blog.couchbase.com/saga-pattern-implement-business-transactions-using-microservices-part-2/)
    
-   
+## Implementing sample microservice based Banking System
+We will now implement a sample microservice based banking system that provides deposit and withdraw services.
+### Understanding the business logic
+Our business contains three microservices, *User Request Service*, *Customer Service* and *Bank Service*.
+Understand the business at a glance:
+![Transactions across microservices](images/transaction_overview.png)
