@@ -12,6 +12,8 @@ In a monolith system, there is a single database that can maintain the `ACID pro
 
 ### What is the solution?
 1. `Two phase commit (2PC)` : 2PC handles every transaction in two phases, *Prepare Phase* & *Commit Phase*. *Transaction Coordinator* maintains the life cycle of transaction.
+*Prepare Phase*: In this phase, the controlling node would ask all the participating nodes if they are ready to commit. The participating nodes would then respond in yes or no.
+*Commit Phase*: Then, if all the nodes had replied in affirmative, the controlling node would ask them to commit, else even if one node replied in negative, it’ll ask them to roll back.
 To understand 2PC architecture in detail you can [see here](https://medium.com/swlh/handling-transactions-in-the-microservice-world-c77b275813e0)
 2. `SAGA Pattern` : A saga is a sequence of local transactions where each transaction updates data within a single service. The first transaction is initiated by an external request corresponding to the system operation, and then each subsequent step is triggered by the completion of the previous one.
 SAGA is one of the best way to ensure the consistency of the data in a distributed architecture without having a single ACID transaction. SAGA commits multiple compensatory transactions at different stages ensuring to rollback when required.
@@ -27,6 +29,31 @@ Saga transaction can be implemented in different ways, but the two most popular 
 ## Implementing sample microservice based Banking System
 We will now implement a sample microservice based banking system that provides deposit and withdraw services.
 ### Understanding the business logic
-Our business contains three microservices, *User Request Service*, *Customer Service* and *Bank Service*.
+Our business contains three microservices, *User Request Service*, *Customer Service* and *Bank Service*. There is also a message broker for passing messages across the microservices.
+
+* User request service: consists of User Transaction Request and Orchestrator. Orchestrator here control the flow of Saga Orchestration.
+* Customer Service: consists of Customer Ledger and Customer Master.
+* Bank Service: consists of Bank Ledger and Bank Master.
+* Message Broker: contains five queues for storing and forwarding messages across microservices. The queues are- UserTransactionRequest, ClientRequest, ClientResponse, BankRequest and BankResponse.
 Understand the business at a glance:
 ![Transactions across microservices](images/transaction_overview.png)
+1. Any user will request for a transaction hitting the end point
+2. The user request will be sent to the message broker. The request file will be stored in UserTransactionRequestQueue.
+3. Orchestrator will be forwarded the user request message.
+4. Orchestrator will then send the message to broker and the message will be stored in ClientRequest queue.
+5. The message will be forwarded to client service. Client Ledger now check the eligibility of the request. 
+6. According to the eligibility of the request, client service will send the response message to ClientResponse queue.
+7. Client response will be forwarded to orchestrator.
+8. If response is affirmative, orchestrator will send a bank ledger request and the request will be stored in BankRequest queue.
+9. Message broker will then forward the request to bank service.
+10. After analysing whether the bank ledger request is legitimate, the bank service will send a response message to BankResponse queue.
+11. The response will be sent to orchestrator.
+12. If the response message is affirmative, orchestrator will send a request to BankRequest queue for updating Bank master.
+13. The request will be forwarded to Bank Service.
+14. After updating Bank Master, the bank service will send a response message to BankResponse queue.
+15. The response message will be forwarded to Orchestrator.
+16. If the response is affirmative, orchestrator will send a request to ClientRequest queue for updating Client Master.
+17. The request will be forwarded to Client Service.
+18. After updating Client Master, Client Service will send the response message to Client Response queue.
+19. The response will be sent to Orchestrator.
+20. If the response is affirmative, Orchestrator inform User that the transaction status is *successful*. If any of the responses is negative, User will be informed the transaction status is *aborted*.
