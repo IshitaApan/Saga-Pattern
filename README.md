@@ -35,7 +35,7 @@ Our business contains three microservices, *User Request Service*, *Customer Ser
 * Customer Service: consists of Customer Ledger and Customer Master.
 * Bank Service: consists of Bank Ledger and Bank Master.
 * Message Broker: contains five queues for storing and forwarding messages across microservices. The queues are- UserTransactionRequest, ClientRequest, ClientResponse, BankRequest and BankResponse.
-Understand the business at a glance:
+##### Understand the business at a glance:
 ![Transactions across microservices](images/transaction_overview.png)
 1. Any user will request for a transaction hitting the end point
 2. The user request will be sent to the message broker. The request file will be stored in UserTransactionRequestQueue.
