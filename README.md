@@ -29,13 +29,21 @@ Saga transaction can be implemented in different ways, but the two most popular 
 ## Implementing sample microservice based Banking System
 We will now implement a sample microservice based banking system that provides deposit and withdraw services.
 ### Understanding the business logic
-Our business contains three microservices, *User Request Service*, *Customer Service* and *Bank Service*. There is also a message broker for passing messages across the microservices.
+Our business contains three microservices, *User Request Service*, *Client Service* and *Bank Service*. There is also a *Message Broker* for passing messages across the microservices.
 
-* User request service: consists of User Transaction Request and Orchestrator. Orchestrator here control the flow of Saga Orchestration.
-* Customer Service: consists of Customer Ledger and Customer Master.
-* Bank Service: consists of Bank Ledger and Bank Master.
-* Message Broker: contains five queues for storing and forwarding messages across microservices. The queues are- UserTransactionRequest, ClientRequest, ClientResponse, BankRequest and BankResponse.
-##### Understand the business at a glance:
+* User request service: consists of User Transaction Request and Orchestrator. Orchestrator here control the flow of Saga Orchestration.<br>
+Code for User Transaction Request : [User Transaction Request](https://github.com/IshitaApan/Saga-Pattern/tree/master/UserRequest)<br>
+Code for Orchestrator : [Orchestrator](https://github.com/IshitaApan/Saga-Pattern/tree/master/Orchestrator)<br>
+* Client Service: consists of Customer Ledger and Customer Master.<br>
+Code for Client Service : [Client Service](https://github.com/IshitaApan/Saga-Pattern/tree/master/ClientService)
+* Bank Service: consists of Bank Ledger and Bank Master.<br>
+Code for Bank Service : [Bank Service](https://github.com/IshitaApan/Saga-Pattern/tree/master/BankService)
+* Message Broker: contains five queues for storing and forwarding messages across microservices. The queues are- *UserTransactionRequest, ClientRequest, ClientResponse, BankRequest and BankResponse*.
+#### Workflow and Compensation:
+Understand SAGA workflow and compensation for this business at a glance,
+![Compensation](images/workflow_compensation.png)
+#### Transactions:
+Distributed transactions across the microservices through message broker,
 ![Transactions across microservices](images/transaction_overview.png)
 1. Any user will request for a transaction hitting the end point
 2. The user request will be sent to the message broker. The request file will be stored in UserTransactionRequestQueue.
@@ -56,4 +64,9 @@ Our business contains three microservices, *User Request Service*, *Customer Ser
 17. The request will be forwarded to Client Service.
 18. After updating Client Master, Client Service will send the response message to Client Response queue.
 19. The response will be sent to Orchestrator.
-20. If the response is affirmative, Orchestrator inform User that the transaction status is *successful*. If any of the responses is negative, User will be informed the transaction status is *aborted*.
+20. If the response is affirmative, Orchestrator inform User that the transaction status is *successful* <br> If any of the responses is negative, the corresponding compensation will be held and user will be informed the transaction status is *aborted*.
+
+#### Data Flow through the Databases of Microservices
+
+The initial condition of the databases:
+![Initial states of tables](images/Tables_1.png)
