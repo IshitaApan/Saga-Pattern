@@ -68,5 +68,20 @@ Distributed transactions across the microservices through message broker,
 
 #### Data Flow through the Databases of Microservices
 
-The initial condition of the databases:
-![Initial states of tables](images/Tables_1.png)
+The initial condition of the databases:<br><br>
+![Initial states of tables](images/Tables_1.png)<br><br>
+After step 1 being successful,<br><br>
+![UserTransactionRequest Table](images/Tables_2.png)<br><br>
+After step 5 being successful,<br><br>
+![CustomerLedger Table](images/Tables_3.png)<br><br>
+After step 9 being successful,<br><br>
+![BankLedger Table](images/Tables_4.png)<br><br>
+After step 13 being successful,<br><br>
+![BankMaster Table](images/Tables_5.png)<br><br>
+After step 17 being successful,<br><br>
+![ClientMaster Table](images/Tables_6.png)<br><br>
+![ClientLedger Table](images/Tables_7.png)<br><br>
+After step 20 being successful,<br><br>
+![UserTransactionRequest Table](images/Tables_8.png)<br><br>
+
+
