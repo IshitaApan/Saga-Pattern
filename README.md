@@ -28,7 +28,7 @@ Saga transaction can be implemented in different ways, but the two most popular 
    
 ## Implementing sample microservice based Banking System
 We will now implement a sample microservice based banking system that provides deposit and withdraw services.
-### Required tools and technology
+### Required technology
 * Spring Boot, for building microservices
 * MySQL, for handling database
 * RabbitMQ, for acting as message broker
