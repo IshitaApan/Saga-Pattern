@@ -10,7 +10,7 @@ For this purpose, we will try to cover the following,
 * Spring Boot, for building microservices
 * MySQL, for handling database
 * RabbitMQ, for acting as message broker
-* Postman, for initiating transaction in Customer service
+* Postman, for initiating transaction in User Request service
 * Eclipse or similar IDE that supports these technologies
 
 ## Project Structure
@@ -55,4 +55,8 @@ Four distinct databases have been used for four microservices. MySql has been us
 ![Bank Master Table](images/DB/BankMasterDB.png)
 
 ## RabbitMQ Queues
+![RabbitMQ queues](images/RabbitMQ/queues.png)
 
+## Postman 
+Hitting endpoint of User Request through a post request and initiating transaction.
+![postman hitting endpoint of user request](images/Postman/postRequest.png)
